@@ -9,7 +9,8 @@ defineProps({
 </script>
 
 <template>
-    <Layout :title="title">
-    </Layout>
+<Layout :title="title">
+</Layout>
 </template>
+
 
