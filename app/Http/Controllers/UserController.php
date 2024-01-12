@@ -77,6 +77,7 @@ class UserController extends Controller
             ])
         );
 
+        session()->flash('message', 'Данные успешно обновлены!');
         return redirect()->route('users.index');
     }
 

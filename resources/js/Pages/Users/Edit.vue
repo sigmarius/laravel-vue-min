@@ -62,7 +62,11 @@ const update = () => {
                 </div>
 
                 <div class="p-5 flex items-center gap-3 bg-gray-50 sm:px-6">
-                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <button
+                        :disabled="form.processing"
+                        type="submit"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm font-medium rounded-md text-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
                         Обновить
                     </button>
 
@@ -72,6 +76,13 @@ const update = () => {
                     >
                         Вернуться назад
                     </Link>
+                </div>
+
+                <div
+                    v-if="form.isDirty"
+                    class="p-3 font-mono text-gray-400 italic"
+                >
+                    Данные изменены, не забудьте сохранить форму!
                 </div>
             </div>
         </form>
