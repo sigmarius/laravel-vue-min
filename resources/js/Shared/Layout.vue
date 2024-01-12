@@ -19,7 +19,7 @@
     <NavMenu/>
 
     <div class="mx-auto container">
-        <h1 class="text-3xl font-bold">{{ title }}</h1>
+        <h1 class="mb-4 text-3xl font-bold">{{ title }}</h1>
         <slot />
     </div>
 </template>

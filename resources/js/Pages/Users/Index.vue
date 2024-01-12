@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router  } from "@inertiajs/vue3";
 import Layout from '../../Shared/Layout.vue';
 import Paginator from '../../Shared/Paginator.vue';
 
@@ -12,12 +12,21 @@ const props = defineProps({
     }
 })
 
+const destroy = (user) => {
+    if (confirm('Вы уверены что хотите удалить пользователя ' + user.name + ' ?')) {
+        router.delete(route('users.destroy', user.id));
+    }
+}
+
 console.log('users', props.users);
 </script>
 
 <template>
     <Layout :title="title">
-        <Link :href="route('users.create')" class="text-indigo-600 hover:text-indigo-900 my-5 block">
+        <Link
+            :href="route('users.create')"
+            class="text-indigo-600 hover:text-indigo-900 my-5 block"
+        >
             Добавить пользователя
         </Link>
 
@@ -60,8 +69,12 @@ console.log('users', props.users);
                                         :href="route('users.edit', user.id)"
                                     >Редактировать</Link>
 
-                                    <a class="text-red-600 hover:text-red-900 cursor-pointer"
-                                    >Удалить</a>
+                                    <a
+                                        @click="$event => destroy(user)"
+                                        class="text-red-600 hover:text-red-900 cursor-pointer"
+                                    >
+                                        Удалить
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
