@@ -31,6 +31,7 @@ const logout = () => {
                     class="text-sm font-semibold leading-6 text-gray-900">
                     Users
                 </Link>
+                <a :href="route('blade')" class="text-sm font-semibold leading-6 text-gray-900">Blade</a>
                 <Link :href="route('about')" class="text-sm font-semibold leading-6 text-gray-900">About</Link>
             </div>
 
