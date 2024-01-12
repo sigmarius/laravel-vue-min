@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +20,22 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('home');
-Route::get('/about', [\App\Http\Controllers\IndexController::class, 'about'])->name('about');
+Route::controller(AuthController::class)
+    ->group(function () {
+        Route::post('/login', 'login')->name('login')->middleware('guest');
+        Route::delete('/logout', 'logout')->name('logout')->middleware('auth');
+    });
 
-Route::resource('/users', \App\Http\Controllers\UserController::class);
+Route::inertia('/login', 'Login', ['title' => 'Login']);
+
+Route::controller(IndexController::class)
+    ->group(function () {
+        Route::get('/', 'index')->name('home');
+        Route::get('/about', 'about')->name('about');
+    });
+
+Route::middleware('auth')
+    ->group(function () {
+        Route::resource('/users', UserController::class);
+    });
+
