@@ -17,8 +17,6 @@ const destroy = (user) => {
         router.delete(route('users.destroy', user.id));
     }
 }
-
-console.log('users', props.users);
 </script>
 
 <template>
