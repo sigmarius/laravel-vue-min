@@ -13,6 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
+//        dd(User::paginate(5)->toArray());
         return Inertia::render('Users/Index', [
             'title' => 'Users',
             'users' => User::paginate(5)->toArray(),
@@ -48,7 +49,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return $user->id;
     }
 
     /**

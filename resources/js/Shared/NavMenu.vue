@@ -21,6 +21,7 @@ import { Link } from "@inertiajs/vue3";
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
                 <Link :href="route('home')" class="text-sm font-semibold leading-6 text-gray-900">Home</Link>
+                <Link :href="route('users.index')" class="text-sm font-semibold leading-6 text-gray-900">Users</Link>
                 <Link :href="route('about')" class="text-sm font-semibold leading-6 text-gray-900">About</Link>
             </div>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">

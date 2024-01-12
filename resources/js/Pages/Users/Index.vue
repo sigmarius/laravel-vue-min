@@ -1,6 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import Layout from '../../Shared/Layout.vue';
+import Paginator from '../../Shared/Paginator.vue';
 
 const props = defineProps({
     title: {
@@ -40,23 +41,23 @@ console.log('users', props.users);
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                            <tr>
+                            <tr v-for="user in users.data" :key="user.id">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">
-                                        name
+                                        {{ user.name }}
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900">
-                                        email
+                                        {{ user.email }}
                                     </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex justify-end items-center space-x-3">
                                     <Link
                                         class="text-indigo-600 hover:text-indigo-900"
-                                        href="route('users.edit')"
+                                        :href="route('users.edit', user.id)"
                                     >Редактировать</Link>
 
                                     <a class="text-red-600 hover:text-red-900 cursor-pointer"
@@ -65,6 +66,13 @@ console.log('users', props.users);
                             </tr>
                             </tbody>
                         </table>
+
+                        <Paginator
+                            :links="users.links"
+                            :from="users.from"
+                            :to="users.to"
+                            :total="users.total"
+                        />
                     </div>
 
                     <div v-else class="text-center font-bold text-xl">
