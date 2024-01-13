@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BladeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,12 @@ Route::controller(IndexController::class)
     ->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/about', 'about')->name('about');
+    });
+
+Route::controller(PostController::class)
+    ->group(function () {
+        Route::get('posts', 'index')->name('posts.index');
+        Route::get('posts/{id}', 'show')->name('posts.show');
     });
 
 Route::middleware('auth')
