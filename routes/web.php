@@ -18,17 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('blade')->group(function () {
-    Route::get('', [BladeController::class, 'index'])->name('blade');
-});
-
 Route::controller(AuthController::class)
     ->group(function () {
-        Route::post('/login', 'login')->name('login')->middleware('guest');
-        Route::delete('/logout', 'logout')->name('logout')->middleware('auth');
-    });
+        Route::match(['get', 'delete'], '/logout', 'logout')->name('logout')->middleware('auth');
 
-Route::inertia('/login', 'Login', ['title' => 'Login']);
+        Route::middleware('guest')->group(function () {
+            //      стандартная авторизация
+            Route::get('/login', 'showLoginForm')->name('login');
+            //      регистрация через Inertia
+            //Route::inertia('/login', 'Login', ['title' => 'Login']);
+
+            Route::post('/login', 'login')->name('login');
+
+            Route::get('/register', 'showRegisterForm')->name('register');
+            Route::post('/register_process', 'register')->name('register_process');
+        });
+    });
 
 Route::controller(IndexController::class)
     ->group(function () {

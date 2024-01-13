@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginFormRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     public function login(LoginFormRequest $request): RedirectResponse
     {
-        if (!auth()->attempt($request->validated())) {
+        if (!auth('web')->attempt($request->validated())) {
             return redirect()
                 ->route('login')
                 ->withErrors(['email' => 'Пользователь не найден, либо данные введены неверно']);
@@ -21,7 +22,7 @@ class AuthController extends Controller
 
     public function logout(): RedirectResponse
     {
-        auth()->logout();
+        auth('web')->logout();
 
 //        очищаем сессию и сбрасываем все данные
         request()->session()->invalidate();
@@ -29,5 +30,36 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
 
         return redirect()->route('home');
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'min:3'],
+            'email' => ['required', 'email', 'string', 'unique:users,email'],
+            'password' => ['required', 'confirmed']
+        ]);
+
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password'])
+        ]);
+
+        if ($user) {
+            auth('web')->login($user);
+        }
+
+        return redirect(route('home'));
     }
 }

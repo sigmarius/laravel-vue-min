@@ -8,7 +8,6 @@
         @foreach($posts as $post)
             @include('posts.partials.item', compact('post'))
         @endforeach
-
-        {{ $posts->links() }}
     </div>
+    {{ $posts->links() }}
 @endsection
