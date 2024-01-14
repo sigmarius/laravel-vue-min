@@ -39,6 +39,9 @@ Route::controller(IndexController::class)
     ->group(function () {
         Route::get('/', 'index')->name('home');
         Route::get('/about', 'about')->name('about');
+
+        Route::get('/contacts', 'showContactForm')->name('contacts');
+        Route::post('/contact_form_process', 'contactForm')->name('contact_form_process');
     });
 
 Route::controller(PostController::class)
