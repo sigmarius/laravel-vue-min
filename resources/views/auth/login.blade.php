@@ -12,7 +12,7 @@
                 <input
                     type="email"
                     name="email"
-                    class="w-full h-12 border border-red-500 rounded px-3 @error('email') border-red-800 @enderror"
+                    class="w-full h-12 border rounded px-3 @error('email') border-red-800 @enderror"
                     placeholder="Email" />
                 @error('email')
                     <p class="text-red-500">{{ $message }}</p>
@@ -29,7 +29,7 @@
                 @enderror
 
                 <div>
-                    <a href="#" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Забыли пароль?</a>
+                    <a href="{{ route('forgot_password') }}" class="font-medium text-blue-900 hover:bg-blue-300 rounded-md p-2">Забыли пароль?</a>
                 </div>
 
                 <div>

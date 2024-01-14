@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginFormRequest;
+use App\Mail\ForgotPasswordForm;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -59,6 +61,29 @@ class AuthController extends Controller
         if ($user) {
             auth('web')->login($user);
         }
+
+        return redirect(route('home'));
+    }
+
+    public function showForgotPasswordForm()
+    {
+        return view('auth.forgot_password');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email', 'string', 'exists:users'],
+        ]);
+
+        $user = User::where(['email' => $data['email']])->first();
+
+        $password = uniqid();
+
+        $user->password = bcrypt($password);
+        $user->save();
+
+        Mail::to($user)->send(new ForgotPasswordForm($password));
 
         return redirect(route('home'));
     }

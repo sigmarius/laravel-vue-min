@@ -30,6 +30,9 @@ Route::controller(AuthController::class)
 
             Route::post('/login', 'login')->name('login');
 
+            Route::get('/forgot_password', 'showForgotPasswordForm')->name('forgot_password');
+            Route::post('/forgot_password_process', 'forgotPassword')->name('forgot_password_process');
+
             Route::get('/register', 'showRegisterForm')->name('register');
             Route::post('/register_process', 'register')->name('register_process');
         });
