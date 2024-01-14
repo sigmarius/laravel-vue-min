@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactFormRequest;
+use App\Jobs\ContactFormJob;
 use App\Mail\ContactForm;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -35,8 +36,9 @@ class IndexController extends Controller
 
     public function contactForm(ContactFormRequest $request)
     {
-        Mail::to('webroom.pro@yandex.ru')
-            ->send(new ContactForm($request->validated()));
+        $formData = $request->validated();
+
+        dispatch(new ContactFormJob($formData));
 
         return redirect()->route('home');
     }

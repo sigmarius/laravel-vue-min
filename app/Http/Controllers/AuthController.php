@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginFormRequest;
+use App\Jobs\ForgotUserPasswordJob;
 use App\Mail\ForgotPasswordForm;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -83,7 +84,7 @@ class AuthController extends Controller
         $user->password = bcrypt($password);
         $user->save();
 
-        Mail::to($user)->send(new ForgotPasswordForm($password));
+        dispatch(new ForgotUserPasswordJob($user, $password));
 
         return redirect(route('home'));
     }
