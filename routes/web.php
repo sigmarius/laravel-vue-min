@@ -57,6 +57,6 @@ Route::middleware('auth')
     ->group(function () {
         Route::resource('/users', UserController::class);
 
-        Route::post('posts/comment/{id}', [PostController::class, 'comment'])->name('comment');
+        Route::post('posts/comment/{id}', [PostController::class, 'addComment'])->name('comment');
     });
 

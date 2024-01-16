@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\CommentCreated;
+use App\Listeners\NewCommentEmailNotification;
 use App\Models\LaravelVersion;
 use App\Observers\LaravelVersionObserver;
 use Illuminate\Auth\Events\Registered;
@@ -20,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        CommentCreated::class => [
+            NewCommentEmailNotification::class,
+//            ... и другие обработчики, если нужно
+        ]
     ];
 
     /**

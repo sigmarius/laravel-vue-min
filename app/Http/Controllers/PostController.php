@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentCreated;
 use App\Http\Requests\CommentFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -31,11 +33,13 @@ class PostController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @var Post $post
      */
-    public function comment($id, CommentFormRequest $request)
+    public function addComment($id, CommentFormRequest $request)
     {
         $post = Post::findOrFail($id);
 
-        $post->comments()->create($request->validated());
+        $comment = $post->comments()->create($request->validated());
+
+        event(new CommentCreated($comment, $post->title));
 
         return redirect()->route('posts.show', $id);
     }
