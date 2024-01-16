@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\AddPostThumbnailAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostFormRequest;
 use App\Models\Post;
@@ -32,16 +33,9 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostFormRequest $request)
+    public function store(PostFormRequest $request, AddPostThumbnailAction $action)
     {
-        $data = $request->validated();
-
-        if ($request->has('thumbnail')) {
-            $thumbnail = str_replace('public/posts', '', $request
-                ->file('thumbnail')
-                ->store('public/posts'));
-            $data['thumbnail'] = $thumbnail;
-        }
+        $data = $action->handle($request);
 
         Post::create($data);
 
@@ -71,18 +65,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostFormRequest $request, string $id)
+    public function update(PostFormRequest $request, AddPostThumbnailAction $action, string $id)
     {
         $post = Post::findOrFail($id);
 
-        $data = $request->validated();
-
-        if ($request->has('thumbnail')) {
-            $thumbnail = str_replace('public/posts', '', $request
-                ->file('thumbnail')
-                ->store('public/posts'));
-            $data['thumbnail'] = $thumbnail;
-        }
+        $data = $action->handle($request);
 
         $post->update($data);
 
