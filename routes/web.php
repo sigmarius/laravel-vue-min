@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BladeController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
@@ -60,3 +61,7 @@ Route::middleware('auth')
         Route::post('posts/comment/{id}', [PostController::class, 'addComment'])->name('comment');
     });
 
+Route::controller(ChatController::class)
+    ->group(function () {
+        Route::get('/chat', 'index');
+    });

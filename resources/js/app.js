@@ -15,3 +15,6 @@ createInertiaApp({
             .mount(el)
     },
 })
+
+const app = createApp({});
+app.mount('#app');
