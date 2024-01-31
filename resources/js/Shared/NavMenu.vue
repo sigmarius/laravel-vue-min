@@ -24,14 +24,14 @@ const logout = () => {
                 </button>
             </div>
             <div class="hidden lg:flex lg:gap-x-12">
-                <Link :href="route('home')" class="text-sm font-semibold leading-6 text-gray-900">Home</Link>
+                <a :href="route('home')" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
                 <Link
                     v-if="$page.props.user"
                     :href="route('users.index')"
                     class="text-sm font-semibold leading-6 text-gray-900">
                     Users
                 </Link>
-                <a :href="route('blade')" class="text-sm font-semibold leading-6 text-gray-900">Blade</a>
+                <a :href="route('posts.index')" class="text-sm font-semibold leading-6 text-gray-900">Posts</a>
                 <Link :href="route('about')" class="text-sm font-semibold leading-6 text-gray-900">About</Link>
             </div>
 

@@ -6,10 +6,6 @@
         <h3 class="text-gray-700 text-3xl font-medium">{{ isset($post) ? "Редактировать статью id {$post->id}" : 'Добавить статью' }}</h3>
 
         <div class="mt-8">
-
-        </div>
-
-        <div class="mt-8">
             <form
                 action="{{ isset($post) ? route('admin.posts.update', $post->id) : route('admin.posts.store')}}"
                 method="post"
