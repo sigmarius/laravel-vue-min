@@ -6,10 +6,12 @@
 
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 </head>
 <body>
     <div id="app">
         @yield('content')
     </div>
+
 </body>
 </html>

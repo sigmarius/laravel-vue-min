@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BladeController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
@@ -63,5 +62,7 @@ Route::middleware('auth')
 
 Route::controller(ChatController::class)
     ->group(function () {
-        Route::get('/chat', 'index');
+        Route::get('/chat', 'index')->name('chat');
+        Route::get('/chat/messages', 'messages');
+        Route::post('/chat/send', 'send');
     });

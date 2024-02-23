@@ -32,6 +32,7 @@ const logout = () => {
                     Users
                 </Link>
                 <a :href="route('posts.index')" class="text-sm font-semibold leading-6 text-gray-900">Posts</a>
+                <a :href="route('chat')" class="text-sm font-semibold leading-6 text-gray-900">Chat</a>
                 <Link :href="route('about')" class="text-sm font-semibold leading-6 text-gray-900">About</Link>
             </div>
 

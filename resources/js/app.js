@@ -2,6 +2,8 @@ import './bootstrap';
 
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+import ChatForm from "./components/ChatForm.vue";
+import ChatMessages from "./components/ChatMessages.vue";
 
 createInertiaApp({
     resolve: name => {
@@ -16,5 +18,10 @@ createInertiaApp({
     },
 })
 
-const app = createApp({});
+const app = createApp({
+    components: {
+        ChatForm,
+        ChatMessages
+    }
+});
 app.mount('#app');
