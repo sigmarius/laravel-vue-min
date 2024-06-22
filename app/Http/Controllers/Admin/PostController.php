@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -57,7 +58,24 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        // работа от текущей модели с польлзователем
+        if (auth('admin')->user()->can('update-post', $post)) {
+            abort(403, 'Вам не разрешено выполнять это действие');
+        }
 
+        // работа с Gate как с объектом
+        $gate = Gate::inspect('update-post', $post);
+
+        if ($gate->authorize()) {
+            // что-то делаем
+        }
+
+        // работает также, как и can во view
+        $this->authorize('update-post', $post);
+
+        if (!Gate::allows('update-post', $post)) {
+            abort(403, 'Вам не разрешено выполнять это действие');
+        }
 
         return view('admin.posts.create', compact('post'));
     }

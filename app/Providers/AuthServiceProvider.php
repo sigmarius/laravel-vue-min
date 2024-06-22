@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\AdminUser;
+use App\Models\Post;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,20 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // регистрируем политики
+        $this->registerPolicies();
+
+        // если пользователь имеет роль Admin, ему будут доступны все действия
+        Gate::before(function (AdminUser $user) {
+            return $user->roles->containsStrict('id', 1);
+        });
+
+        Gate::define('update-post', function (AdminUser $user, Post $post) {
+            return $user->roles->containsStrict('id', 1);
+        });
+
+        Gate::define('delete-post', function (AdminUser $user, Post $post) {
+            return $user->roles->containsStrict('id', 1);
+        });
     }
 }
