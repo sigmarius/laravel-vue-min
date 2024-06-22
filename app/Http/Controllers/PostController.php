@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        // распространяем действие политики на весь ресурс
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     public function index()
     {
         $posts = Post::query()

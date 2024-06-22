@@ -30,7 +30,7 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                        @canany(['update-post', 'delete-post'], $post)
+                                        @canany(['update', 'delete'], $post)
                                             <a href="{{ route('admin.posts.edit', $post->id) }}" class="text-indigo-600 hover:text-indigo-900">Редактировать</a>
 
                                             <form action="{{ route('admin.posts.destroy', $post->id) }}" method="post">
