@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminUserFormRequest;
 use App\Models\AdminUser;
 use App\Models\Role;
+use App\Services\TestService;
+use App\Utilities\Notification\MessengerNotificationInterface;
 use Illuminate\Http\Request;
 
 class AdminUserController extends Controller
@@ -13,8 +15,12 @@ class AdminUserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MessengerNotificationInterface $notificator)
     {
+        // вызываем метод из класса, привязанного к интерфейсу
+        // в методе boot() AppServiceProvider
+        $notificator->send('test');
+
         $users = AdminUser::query()
             ->orderBy('created_at', 'desc')
             ->paginate(10);
